@@ -112,7 +112,7 @@ public class Product {
         this.imageName = imageName;
     }
 
-    public String getImageType(String contentType) {
+    public String getImageType() {
         return imageType;
     }
 
