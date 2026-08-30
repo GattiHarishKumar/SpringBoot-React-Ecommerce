@@ -50,15 +50,17 @@ public class ProductController {
         }
     }
 
-    @GetMapping("product/{productId}/image")
+    @GetMapping("/product/{productId}/image")
     public ResponseEntity<byte[]> getImageByProductId(@PathVariable int productId){
 
         Product product = service.getProductById(productId);
-        byte[] imageFile = product.getImageDate();
+        if (product == null || product.getImageDate() == null) {
+            return ResponseEntity.notFound().build();
+        }
 
         return ResponseEntity.ok()
-                .contentType(MediaType.valueOf(product.getImageType("")))
-                .body(imageFile);
+                .contentType(MediaType.parseMediaType(product.getImageType()))
+                .body(product.getImageDate());
     }
 
     @PutMapping("/product/{id}")
